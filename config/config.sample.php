@@ -55,7 +55,22 @@ return [
     'session_idle_minutes' => 480, // log out after 8 hours without activity
 
     // Private files (receipts, chat images, backups, logs). Must be OUTSIDE public/.
-    'storage_path' => dirname(__DIR__) . '/storage',
+    // On Vercel serverless, defaults to writable /tmp/storage.
+    'storage_path' => (static function (): string {
+        if (getenv('STORAGE_PATH')) {
+            return (string) getenv('STORAGE_PATH');
+        }
+        if (getenv('VERCEL')) {
+            $tmp = '/tmp/storage';
+            foreach (['', '/logs', '/receipts', '/chat', '/uploads', '/backups'] as $sub) {
+                if (!is_dir($tmp . $sub)) {
+                    @mkdir($tmp . $sub, 0777, true);
+                }
+            }
+            return $tmp;
+        }
+        return dirname(__DIR__) . '/storage';
+    })(),
 
     // Optional: full path to mysqldump. Leave null to use the built-in PDO dump.
     'mysqldump_path' => null,
