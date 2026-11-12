@@ -180,3 +180,5 @@ C:\xampp\php\php.exe tests\e2e_phase7.php http://localhost:8000
   1. Upload all files to your hosting folder (or point the domain document root directly to `public/`).
   2. Each internal folder (`app/`, `config/`, `database/`, `storage/`, `tests/`, `docs/`) includes a `.htaccess` with `Require all denied` so private files and `storage/` uploads are never web-accessible even when deployed to a shared `public_html` root.
   3. Import `database/schema.sql` and `database/seed.sql` via phpMyAdmin, copy `config/config.sample.php` to `config/config.php`, set `'env' => 'production'` and `'demo_date' => null`, and update your MySQL credentials.
+#   d o u f f e r _ p h o t o _ s y s  
+ 
