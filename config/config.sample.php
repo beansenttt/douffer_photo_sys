@@ -22,14 +22,34 @@ return [
     // Set to null to use the real date.
     'demo_date' => getenv('DEMO_DATE') !== false ? getenv('DEMO_DATE') : '2026-12-12',
 
-    'db' => [
-        'host'    => getenv('DB_HOST') ?: '127.0.0.1',
-        'port'    => (int) (getenv('DB_PORT') ?: 3306),
-        'name'    => getenv('DB_NAME') ?: 'douffer_photosys',
-        'user'    => getenv('DB_USER') ?: 'root',
-        'pass'    => getenv('DB_PASS') !== false ? getenv('DB_PASS') : '',
-        'charset' => 'utf8mb4',
-    ],
+    'db' => (static function (): array {
+        $dbUrl = getenv('DATABASE_URL') ?: getenv('MYSQL_URL');
+        if ($dbUrl) {
+            $parsed = parse_url($dbUrl);
+            return [
+                'host'    => $parsed['host'] ?? '127.0.0.1',
+                'port'    => (int) ($parsed['port'] ?? 3306),
+                'name'    => ltrim($parsed['path'] ?? '/douffer_photosys', '/'),
+                'user'    => $parsed['user'] ?? 'root',
+                'pass'    => $parsed['pass'] ?? '',
+                'charset' => 'utf8mb4',
+            ];
+        }
+        return [
+            'host'    => getenv('DB_HOST') ?: (getenv('MYSQLHOST') ?: (getenv('MYSQL_HOST') ?: '127.0.0.1')),
+            'port'    => (int) (getenv('DB_PORT') ?: (getenv('MYSQLPORT') ?: (getenv('MYSQL_PORT') ?: 3306))),
+            'name'    => getenv('DB_NAME') ?: (getenv('MYSQLDATABASE') ?: (getenv('MYSQL_DATABASE') ?: 'douffer_photosys')),
+            'user'    => getenv('DB_USER') ?: (getenv('MYSQLUSER') ?: (getenv('MYSQL_USER') ?: 'root')),
+            'pass'    => getenv('DB_PASS') !== false
+                ? getenv('DB_PASS')
+                : (getenv('MYSQLPASSWORD') !== false
+                    ? getenv('MYSQLPASSWORD')
+                    : (getenv('MYSQL_PASSWORD') !== false
+                        ? getenv('MYSQL_PASSWORD')
+                        : '')),
+            'charset' => 'utf8mb4',
+        ];
+    })(),
 
     'session_name'         => 'dps_session',
     'session_idle_minutes' => 480, // log out after 8 hours without activity
