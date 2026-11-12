@@ -1,0 +1,24 @@
+# Local configuration (contains DB credentials)
+/config/config.php
+
+# Private runtime data (uploads, backups, logs)
+/storage/receipts/*
+/storage/chat/*
+/storage/uploads/*
+/storage/backups/*
+/storage/logs/*
+!/storage/**/.gitkeep
+!/storage/.htaccess
+
+# Agent / AI scratch & briefing logs
+.agents/
+/wireframes/
+/individual_screens/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.tmp

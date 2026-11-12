@@ -1,0 +1,2 @@
+# Never serve this folder over the web (fallback for shared hosting).
+Require all denied

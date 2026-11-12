@@ -1,0 +1,19 @@
+{
+  "name": "Douffer PhotoSys — Photography Management & Booking",
+  "short_name": "Douffer",
+  "description": "Mobile-first event photography and videography booking, project tracking, and studio management system.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#f8fafc",
+  "theme_color": "#0f766e",
+  "icons": [
+    {
+      "src": "assets/img/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

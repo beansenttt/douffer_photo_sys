@@ -1,0 +1,14 @@
+# Douffer PhotoSys: project root (XAMPP).
+# Every request is forwarded into public/, the only folder that is meant to be
+# reachable from the web. app/, config/, database/ and storage/ are never served.
+Options -Indexes
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>
+
+# Fallback if mod_rewrite is missing: block everything except public/.
+<IfModule !mod_rewrite.c>
+    Require all denied
+</IfModule>
